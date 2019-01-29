@@ -15,12 +15,12 @@ rooms[706] = "A dirt wall borders you to the East. The trench continues to the N
 rooms[707] = "Dirt walls border you to the East and West. The trench continues to the North and South. There is a pile of rubble to the south"
 rooms[708] = "Dirt walls border you to the East, West, and South. There is an object lying in the rubble."
 items[708] = "grenade"
-rooms[606] = "Dirt walls border you to the North and South. The trench continues to the East and West. There is a smal pile of rocks."
+rooms[606] = "Dirt walls border you to the North and South. The trench continues to the East and West. There is a small pile of rocks."
 items[606] = "knife"
 rooms[504] = "Dirt walls border you to the North, East, and West. The trench continues to the South."
 rooms[505] = "Dirt walls border you to the East and West. The trench continues to the North and South"
 rooms[506] = "A dirt wall borders you to the South. The trench continues to the East, West, and North"
-rooms[406] = "You trip over something in the dark, part of the trench has collapsed here. Dirt walls border you to the North and South. The trench continues to the Easty and West"
+rooms[406] = "You trip over something in the dark, part of the trench has collapsed here. Dirt walls border you to the North and South. The trench continues to the East and West"
 items[406] = "dead body"
 rooms[306] = "A dirt wall borders you to the North. The trench continues to the East, West, and South. There are many shiny objects littering the area to the South."
 rooms[307] = "Dirt walls border you to the East, West, and South. The trench continues to the North. There is a large pile of metal scrap around your feet"
@@ -55,7 +55,7 @@ def move(direction, room):
     return room
 
 while True:
-    print(rooms[currentRoom])
     print(currentRoom)
+    print(rooms[currentRoom])
     i=input("Where do you want to go?")
     currentRoom=move(i, currentRoom)
