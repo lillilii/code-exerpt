@@ -1,61 +1,63 @@
-import random
-#import the enemy class
+# Mr. Riley's map class v1.90204
+#
+# How to use Mr. Riley's map class...
+# 1.) create a map instance: map = Map()
+# 2.) draw/redraw the map inside the game loop: map.draw(rooms, items, currentlocation)
+# Don't wanna show yer item locations? Do this: map.draw(rooms, False, currentlocation)
 
-rooms = []
-items = []
-currentRoom = 704
+from turtle import *
+import math
 
-for i in range(999):
-    rooms.append(False)
-    items.append(False)
+class Map(Turtle):
+  def __init__(self):
+    Turtle.__init__(self)
+    self.speed(0)
+    self.penup()
+    self.screen = Screen()
+    self.size = 200 # map window size
+    self.roomsize = 20
+    self.roomborder = 2
+    self.startinglocation = None
+    self.columnheight = 100
+    self.screen.setup(self.size,self.size)
+    self.screen.tracer(0)
+    self.screen.bgcolor("black")
+    #self.screen.register_shape("bigdiamond",((-6,-6),(0,9),(6,-6),(-9,3),(9,3),(-6,-6)))
+    self.screen.register_shape("bigstar",((-10,-6.5),(10,0),(-10,6.5),(2.5,-10),(2.5,10),(-10,-6.5)))
+    self.screen.register_shape("lilstar",((-3,-2),(3,0),(-3,2),(1,-3),(1,3),(-3,-2)))
 
-rooms[704] = "You are in a trench. Dirt walls border you to the West, North and East. The trench continues to the south."
-rooms[705] = "Dirt walls border you to the East and West. The trench continues to the North and South"
-rooms[706] = "A dirt wall borders you to the East. The trench continues to the North, West, and South. There is a small pile of rocks to the West"
-rooms[707] = "Dirt walls border you to the East and West. The trench continues to the North and South. There is a pile of rubble to the south"
-rooms[708] = "Dirt walls border you to the East, West, and South. There is an object lying in the rubble."
-items[708] = "grenade"
-rooms[606] = "Dirt walls border you to the North and South. The trench continues to the East and West. There is a small pile of rocks."
-items[606] = "knife"
-rooms[504] = "Dirt walls border you to the North, East, and West. The trench continues to the South."
-rooms[505] = "Dirt walls border you to the East and West. The trench continues to the North and South"
-rooms[506] = "A dirt wall borders you to the South. The trench continues to the East, West, and North"
-rooms[406] = "You trip over something in the dark, part of the trench has collapsed here. Dirt walls border you to the North and South. The trench continues to the East and West"
-items[406] = "dead body"
-rooms[306] = "A dirt wall borders you to the North. The trench continues to the East, West, and South. There are many shiny objects littering the area to the South."
-rooms[307] = "Dirt walls border you to the East, West, and South. The trench continues to the North. There is a large pile of metal scrap around your feet"
-items[307] = "ammo"
-rooms[206] = "Dirt walls border you to the North and South. The trench continues to the East and West. You bump into a large wooden crate in the dark"
-items[206] = "M1 Grand"
-rooms[106] = "Dirt walls border you to the North and south. The trench continues to the East and West. There a pile of wooden scraps on the ground to the West."
-rooms[6] = "Dirt walls border you to the West, North, and South. There are are some wooden scraps at your feet."
-items[6] = "ladder"
-
-def move(direction, room):
-    if(direction=="n"):
-        if(rooms[room - 1] == False):
-            print("Sadly, you cant walk through the ground, or walls.")
-        else:
-            room -= 1
-    elif(direction=="s"):
-        if(rooms[room + 1] == False):
-            print("Sadly, you cant walk through the ground, or walls.")
-        else:
-            room += 1
-    elif(direction=="e"):
-        if(rooms[room + 100] == False):
-            print("Sadly, you cant walk through the ground, or walls.")
-        else:
-            room += 100
-    elif(direction=="w"):
-        if(rooms[room - 100] == False):
-            print("Sadly, you cant walk through the ground, or walls.")
-        else:
-            room -= 100
-    return room
-
-while True:
-    print(currentRoom)
-    print(rooms[currentRoom])
-    i=input("Where do you want to go?")
-    currentRoom=move(i, currentRoom)
+  # use the draw method to draw and redraw the map
+  def draw(self,rooms,roomitems,mylocation):
+    rowwidth = int(math.ceil(len(rooms) / self.columnheight))
+    self.penup()
+    self.clear()
+    if self.startinglocation is None:
+      self.startinglocation = mylocation
+    for row in range(self.columnheight):
+      for column in range(rowwidth):
+        try:
+          if rooms[column*self.columnheight+row]:
+            self.color('white')
+            self.shape("square")
+            self.goto(-self.size/2+(self.roomsize/2)+column*(self.roomsize+self.roomborder),self.size/2-(self.roomsize/2)-row*(self.roomsize+self.roomborder))
+            self.stamp()
+        except:
+          pass
+        try:
+          if roomitems[column*self.columnheight+row]:
+            self.color('gold')
+            self.shape("lilstar")
+            self.goto(-self.size/2+(self.roomsize/2)+column*(self.roomsize+self.roomborder),self.size/2-(self.roomsize/2)-row*(self.roomsize+self.roomborder))
+            self.stamp()
+        except:
+          pass
+        if self.startinglocation == column*self.columnheight+row:
+            self.color('green')
+            self.back(self.roomsize/2)
+            self.write('Start', font=("Arial", 7, "normal"))
+            self.forward(self.roomsize/2)
+        if mylocation == column*self.columnheight+row:
+            self.color('red')
+            self.shape("bigstar")
+            self.stamp()
+    self.screen.update()
