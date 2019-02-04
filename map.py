@@ -1,8 +1,6 @@
 import random
-from map import *
 #import the enemy class
 
-map = Map()
 rooms = []
 items = []
 currentRoom = 704
@@ -19,35 +17,19 @@ rooms[708] = "Dirt walls border you to the East, West, and South. There is an ob
 items[708] = "grenade"
 rooms[606] = "Dirt walls border you to the North and South. The trench continues to the East and West. There is a small pile of rocks."
 items[606] = "knife"
-rooms[502] = ""
-rooms[503] = ""
 rooms[504] = "Dirt walls border you to the North, East, and West. The trench continues to the South."
 rooms[505] = "Dirt walls border you to the East and West. The trench continues to the North and South"
 rooms[506] = "A dirt wall borders you to the South. The trench continues to the East, West, and North"
 rooms[406] = "You trip over something in the dark, part of the trench has collapsed here. Dirt walls border you to the North and South. The trench continues to the East and West"
 items[406] = "dead body"
-rooms[301] = ""
-rooms[302] = ""
-rooms[303] = ""
-rooms[304] = ""
-rooms[305] = ""
 rooms[306] = "A dirt wall borders you to the North. The trench continues to the East, West, and South. There are many shiny objects littering the area to the South."
 rooms[307] = "Dirt walls border you to the East, West, and South. The trench continues to the North. There is a large pile of metal scrap around your feet"
 items[307] = "ammo"
-rooms[202] = ""
 rooms[206] = "Dirt walls border you to the North and South. The trench continues to the East and West. You bump into a large wooden crate in the dark"
 items[206] = "M1 Grand"
-rooms[101] = ""
 rooms[106] = "Dirt walls border you to the North and south. The trench continues to the East and West. There a pile of wooden scraps on the ground to the West."
-rooms[107] = ""
-rooms[108] = ""
-rooms[109] = ""
-rooms[110] = ""
-rooms[111] = ""
-items[111] = ""
-rooms[1] = ""
 rooms[6] = "Dirt walls border you to the West, North, and South. There are are some wooden scraps at your feet."
-rooms[11] = ""
+items[6] = "ladder"
 
 def move(direction, room):
     if(direction=="n"):
