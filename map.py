@@ -14,7 +14,7 @@ class Map(Turtle):
     self.speed(0)
     self.penup()
     self.screen = Screen()
-    self.size = 200 # map window size
+    self.size = 500 # map window size
     self.roomsize = 20
     self.roomborder = 2
     self.startinglocation = None
