@@ -3,13 +3,16 @@ from map import *
 #import the enemy class
 
 map = Map()
+inventory = []
 rooms = []
 items = []
+specialRooms = []
 currentRoom = 704
 
 for i in range(999):
     rooms.append(False)
     items.append(False)
+    specialRooms.append(False)
 
 rooms[704] = "You are in a trench. Dirt walls border you to the West, North and East. The trench continues to the south."
 rooms[705] = "Dirt walls border you to the East and West. The trench continues to the North and South"
@@ -31,24 +34,26 @@ rooms[302] = "Dirt walls border you to the West and East. The trench continues t
 rooms[303] = "Dirt walls border you to the West and East. The trench continues to the North and South"
 rooms[304] = "Dirt walls border you to the West and East. The trench continues to the North and South"
 rooms[305] = "Dirt walls border you to the West and East. The trench continues to the North and South"
-
 rooms[306] = "A dirt wall borders you to the North. The trench continues to the East, West, and South. There are many shiny objects littering the area to the South."
 rooms[307] = "Dirt walls border you to the East, West, and South. The trench continues to the North. There is a large pile of metal scrap around your feet"
 items[307] = "key"
 rooms[201] = "Dirt walls border you to the North and South. The trench continues to the East and West"
 rooms[206] = "Dirt walls border you to the North and South. The trench continues to the East and West"
 items[206] = "M1 Grand"
+rooms[101] = "need key here"
+specialRooms[1] = 101
 rooms[106] = "Dirt walls border you to the North and south. The trench continues to the East and West. There a pile of wooden scraps on the ground to the West."
-rooms[107] = "You are in a aile. You can go south or lead north"
-rooms[108] = "You are in a aile. You can go south or lead north"
-rooms[109] = "You are in a aile. You can go south or lead north"
-rooms[110] = "You are in a aile. You can go south or lead north"
-rooms[111] = "You see a rusty old ladder converred in bodies to your west, You can go north. a dirt wall is to your east and south"
+rooms[107] = "You are in a aisle. You can go south or lead north"
+rooms[108] = "You are in a aisle. You can go south or lead north"
+rooms[109] = "You are in a aisle. You can go south or lead north"
+rooms[110] = "You are in a aisle. You can go south or lead north"
+rooms[111] = "Dirt walls border you to the East and South. The trench continues to the North and West. There a pile of wooden scraps on the ground to the West."
 rooms[11] = "A dirt wall is south, north, and west. The only direction is east"
 rooms[11] = "ladder"
-rooms[106]= "Dirt walls border you to the North and south. The trench continues to the East and West. There a pile of wooden scraps on the ground to the West."
 rooms[6] = "Dirt walls border you to the West, North, and South. There are are some wooden scraps at your feet."
 items[6] = "ladder"
+rooms[1] = "exit"
+specialRooms[2] = 1
 
 def move(direction, room):
     if(direction=="n"):
@@ -73,9 +78,12 @@ def move(direction, room):
             room -= 100
     return room
 
+print("You are an allied soldier fighting in world war 2 on the beaches. You got hit by an explosion and got push into a trench, luckly you survive becuase you landed on sand beg and now you have to fight your way out.  ")
 while True:
+    if(currentRoom in specialRooms):
+        print("special Room")
     print(currentRoom)
     map.draw(rooms, False, currentRoom)
     print(rooms[currentRoom])
-    i=input("Where do you want to go?")
+    i=input("What do you want to do?")
     currentRoom=move(i, currentRoom)
