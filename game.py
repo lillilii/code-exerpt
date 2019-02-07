@@ -55,19 +55,24 @@ items[6] = "ladder"
 rooms[1] = False
 specialRooms[2] = 1
 
-def sroom(srooms, croom, nroom, inventory):
+def sroom(srooms, croom, rooms, inventory):
     if(croom in srooms):
         if(croom == 101):
             if("key" in inventory):
-                print(" Looks like the key you have would work.")
-                i=input(" Would you like to use it? (y/n) ")
+                print("Looks like the key you have would work.")
+                i=input("Would you like to use it? (y/n) ")
                 if(i=="y"):
                     srooms[1]=False
+                    rooms[1] = "there's a hatch 10 feet above you going into what looks like a bunker."
                 else:
                     currentRoom = 201
             else:
                 print(" Looks like you need a key. Try looking around.")
         #open for more special rooms like ending, boss battle, etc.
+
+def checkForItem(room, items):
+    if(room in items):
+        print("")
 
 def move(direction, room):
     if(direction=="n"):
@@ -94,10 +99,9 @@ def move(direction, room):
 
 print("You are an allied soldier fighting in world war 2 on the beaches. You got hit by an explosion and got push into a trench, luckly you survive becuase you landed on sand beg and now you have to fight your way out.  ")
 while True:
-    if(currentRoom in specialRooms):
-        print("special Room")
-    print(currentRoom)
     map.draw(rooms, False, currentRoom)
     print(rooms[currentRoom])
+    checkForItem(currentRoom, items)
+    sroom(specialRooms, currentRoom, rooms, inventory)
     i=input("What do you want to do?")
     currentRoom=move(i, currentRoom)
