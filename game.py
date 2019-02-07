@@ -40,7 +40,7 @@ items[307] = "key"
 rooms[201] = "Dirt walls border you to the North and South. The trench continues to the East and West"
 rooms[206] = "Dirt walls border you to the North and South. The trench continues to the East and West"
 items[206] = "M1 Grand"
-rooms[101] = "need key here"
+rooms[101] = "There is a locked door on the west side."
 specialRooms[1] = 101
 rooms[106] = "Dirt walls border you to the North and south. The trench continues to the East and West. There a pile of wooden scraps on the ground to the West."
 rooms[107] = "You are in a aisle. You can go south or lead north"
@@ -52,8 +52,22 @@ rooms[11] = "A dirt wall is south, north, and west. The only direction is east"
 rooms[11] = "ladder"
 rooms[6] = "Dirt walls border you to the West, North, and South. There are are some wooden scraps at your feet."
 items[6] = "ladder"
-rooms[1] = "exit"
+rooms[1] = False
 specialRooms[2] = 1
+
+def sroom(srooms, croom, nroom, inventory):
+    if(croom in srooms):
+        if(croom == 101):
+            if("key" in inventory):
+                print(" Looks like the key you have would work.")
+                i=input(" Would you like to use it? (y/n) ")
+                if(i=="y"):
+                    srooms[1]=False
+                else:
+                    currentRoom = 201
+            else:
+                print(" Looks like you need a key. Try looking around.")
+        #open for more special rooms like ending, boss battle, etc.
 
 def move(direction, room):
     if(direction=="n"):
