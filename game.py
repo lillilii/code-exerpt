@@ -1,8 +1,8 @@
 import random
-from map import *
-#import the enemy class
+#from map import *
+from time import *
 
-map = Map()
+#map = Map()
 inventory = []
 rooms = []
 items = []
@@ -55,6 +55,11 @@ items[6] = "ladder"
 rooms[1] = False
 specialRooms[2] = 1
 
+def oneLetterAtATime(text):
+    for i in text:
+        print(i, end="", flush=True)
+        sleep(0.05)
+
 def sroom(srooms, croom, rooms, inventory):
     if(croom in srooms):
         if(croom == 101):
@@ -97,11 +102,11 @@ def move(direction, room):
             room -= 100
     return room
 
-print("You are an allied soldier fighting in world war 2 on the beaches. You got hit by an explosion and got push into a trench, luckly you survive becuase you landed on sand beg and now you have to fight your way out.  ")
+#oneLetterAtATime("You are an allied soldier fighting in world war 2 on the beaches. You got hit by an explosion and got push into a trench, luckly you survive becuase you landed on sand beg and now you have to fight your way out.  ")
 while True:
-    map.draw(rooms, False, currentRoom)
-    print(rooms[currentRoom])
+    #map.draw(rooms, False, currentRoom)
+    oneLetterAtATime(rooms[currentRoom])
     checkForItem(currentRoom, items)
     sroom(specialRooms, currentRoom, rooms, inventory)
-    i=input("What do you want to do?")
+    i=input("\nWhat do you want to do?")
     currentRoom=move(i, currentRoom)
