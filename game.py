@@ -100,15 +100,25 @@ def sroom(srooms, croom, rooms, inventory):
                 oneLetterAtATime("The baricade is too solid to tear apart with your hands. Maybe if you had some sort of explosive you could blow it up?")
         if(croom == 303):
             if("knife" in inventory):
-                
+                oneLetterAtATime("This barbed wire looks like it could be cut apart with a knife.")
+                i=input("use it now (y/n)")
+                if(1=="y"):
+                    srooms[1]=False
+                    rooms[302]="Dirt walls border you to the east and west. Barbed wire litters the passage. The trench continues to the North and South"
+                else:
+                    currentRoom = 304
         #open for more special rooms like ending, boss battle, etc.
 
-def checkForItem(room):
-    if(room in items):
-        oneLetterAtATime("room has an item")
+def checkForItem(room, items):
+    if(items[room]!=False):
+        return True
 
 def move(direction, room):
-    if(direction=="n"):
+    if(direction=="t"):
+        if(checkForItem(room, items)):
+            inventory.add()
+
+    elif(direction=="n"):
         if(rooms[room - 1] == False):
             oneLetterAtATime("Sadly, you cant walk through the ground, or walls.")
         else:
