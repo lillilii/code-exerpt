@@ -6,6 +6,7 @@ from time import *
 inventory = []
 rooms = []
 items = []
+descriptions = []
 specialRooms = []
 currentRoom = 704
 
@@ -22,14 +23,17 @@ rooms[708] = "Dirt walls border you to the East, West, and South. There is a lar
 items[708] = "grenade"
 rooms[606] = "Dirt walls border you to the North and South. The trench continues to the East and West. There is a small pile of rocks."
 items[606] = "knife"
+descriptions[606] = "There is a knife among the rocks. Enter t to take"
 rooms[502] = "You've hit a dead end. The only way out is south."
 rooms[503] = "Dirt walls border you to the East and West. The trench continues to the North and South. You bump into a large wooden crate in the dark"
 items[503] = "M1 Grand"
+descriptions[503] = "You find an M1 Grand in the crate. Enter t to take"
 rooms[504] = "Dirt walls border you to the North, East, and West. The trench continues to the South."
 rooms[505] = "Dirt walls border you to the East and West. The trench continues to the North and South"
 rooms[506] = "A dirt wall borders you to the South. The trench continues to the East, West, and North"
 rooms[406] = "You trip over something in the dark, part of the trench has collapsed here. There is a partially buried body. Dirt walls border you to the North and South. The trench continues to the East and West"
 items[406] = "note"
+descriptions[406] = "The person is clutching a piece of paper. Type t to take"
 rooms[301] = "Dirt walls border you to the North and East. The trench continues to the South and West"
 rooms[302] = False
 rooms[303] = "Dirt walls border you to the West and East. The trench continues to the North and South the ground is littered with bits of metal. The path north is blocked by a wire fence."
@@ -44,8 +48,9 @@ rooms[101] = "There is a locked door on the west side."
 specialRooms[2] = 101
 rooms[106] = "Dirt walls border you to the North and south. The trench continues to the East and West. There a pile of wooden scraps on the ground to the West."
 rooms[107] = "You are in an aisle. You can go south or lead north"
-rooms[108] = "You are in an aisle. You can go south or lead north"
+rooms[108] = "The ground is littered with bits of metal. You can go south or lead north"
 items[108] = "key"
+descriptions[108] = "You spot a key among the bits. Type t to take."
 rooms[109] = "You are in an aisle. You can go south or lead north"
 rooms[110] = "You are in an aisle. The path south is blocked to the south with a flimsy wooden baricade."
 specialRooms[3] = 110
@@ -113,10 +118,13 @@ def checkForItem(room, items):
     if(items[room]!=False):
         return True
 
+
+
 def move(direction, room):
     if(direction=="t"):
         if(checkForItem(room, items)):
-            inventory.add()
+            inventory.append(items[room])
+            items[room] = False
 
     elif(direction=="n"):
         if(rooms[room - 1] == False):
@@ -140,11 +148,15 @@ def move(direction, room):
             room -= 100
     return room
 
+#
+
 #oneLetterAtATime("You are an allied soldier fighting in world war 2 on the beaches. You got hit by an explosion and got push into a trench, luckly you survive becuase you landed on sand beg and now you have to fight your way out.  ")
 while True:
     #map.draw(rooms, False, currentRoom)
     oneLetterAtATime(rooms[currentRoom])
     checkForItem(currentRoom, items)
     sroom(specialRooms, currentRoom, rooms, inventory)
+    itemInRoom(currentRoom, items, descriptions)
     i=input("\nWhat do you want to do?")
     currentRoom=move(i, currentRoom)
+    print inventory
