@@ -14,6 +14,7 @@ for i in range(999):
     rooms.append(False)
     items.append(False)
     specialRooms.append(False)
+    descriptions.append(False)
 
 rooms[704] = "You are in a trench. Tall dirt walls border you to the West, North and East. The trench continues to the south."
 rooms[705] = "Dirt walls border you to the East and West. The trench continues to the North and South"
@@ -21,6 +22,7 @@ rooms[706] = "A dirt wall borders you to the East. The trench continues to the N
 rooms[707] = "Dirt walls border you to the East and West. The trench continues to the North and South. There is a pile of rubble to the south"
 rooms[708] = "Dirt walls border you to the East, West, and South. There is a large pile of rubble."
 items[708] = "grenade"
+descriptions[708] = "You find a grenade among the rubble. Enter t to take."
 rooms[606] = "Dirt walls border you to the North and South. The trench continues to the East and West. There is a small pile of rocks."
 items[606] = "knife"
 descriptions[606] = "There is a knife among the rocks. Enter t to take"
@@ -40,8 +42,8 @@ rooms[303] = "Dirt walls border you to the West and East. The trench continues t
 specialRooms[1] = 303
 rooms[304] = "Dirt walls border you to the West and East. The trench continues to the North and South"
 rooms[305] = "Dirt walls border you to the West and East. The trench continues to the North and South"
-rooms[306] = "A dirt wall borders you to the North. The trench continues to the East, West, and South. There are many shiny objects littering the area to the South."
-rooms[307] = "Dirt walls border you to the East, West, and South. The trench continues to the North. There is a large pile of metal scrap around your feet"
+rooms[306] = "A dirt wall borders you to the North. The trench continues to the East, West, and South"
+rooms[307] = "Dirt walls border you to the East, West, and South. The trench continues to the North"
 rooms[201] = "Dirt walls border you to the North and South. The trench continues to the East and West"
 rooms[206] = "Dirt walls border you to the North and South. The trench continues to the East and West"
 rooms[101] = "There is a locked door on the west side."
@@ -49,16 +51,18 @@ specialRooms[2] = 101
 rooms[106] = "Dirt walls border you to the North and south. The trench continues to the East and West. There a pile of wooden scraps on the ground to the West."
 rooms[107] = "You are in an aisle. You can go south or lead north"
 rooms[108] = "The ground is littered with bits of metal. You can go south or lead north"
-items[108] = "key"
+items[108] = "Key"
 descriptions[108] = "You spot a key among the bits. Type t to take."
 rooms[109] = "You are in an aisle. You can go south or lead north"
 rooms[110] = "You are in an aisle. The path south is blocked to the south with a flimsy wooden baricade."
 specialRooms[3] = 110
 rooms[111] = False
 rooms[11] = "A dirt wall is south, north, and west. The only direction is east. Wooden boards litter the ground"
-rooms[11] = "ladder"
+items[11] = "ladder"
+descriptions[11] = "You find a ladder laying among the boards. Enter t to take"
 rooms[6] = "Dirt walls border you to the West, North, and South. There are are some metal scraps at your feet."
-items[6] = "ammo"
+items[6] = "Ammo"
+descriptions[6] = "You find some ammunition on the ground. Enter t to take"
 rooms[1] = False
 specialRooms[4] = 1
 
@@ -70,12 +74,12 @@ def oneLetterAtATime(text):
 def sroom(srooms, croom, rooms, inventory):
     if(croom in srooms):
         if(croom == 1):
-            if("ladder" in inventory):
-                oneLetterAtATime("the ladder should be able to get you up out of the trench")
+            if("Ladder" in inventory):
+                oneLetterAtATime("The ladder should be able to get you up out of the trench")
                 i=input("Use the ladder? (y/n) ")
                 if(i=="y"):
                     srooms[4]=False
-                    oneLetterAtATime("as you make it to the surface, you pass out.")
+                    oneLetterAtATime("As you make it to the surface, you pass out.")
                     oneLetterAtATime("You wake up in a wagon. Three other prisoners are with you. One of them speaks \"Hey, you. You're finally awake. You were trying to cross the border, right? Walked right into that Imperial ambush, same as us, and that thief over there.\"")
                 else:
                     currentRoom = 101
@@ -87,15 +91,15 @@ def sroom(srooms, croom, rooms, inventory):
                 i=input("Would you like to use it? (y/n) ")
                 if(i=="y"):
                     srooms[1]=False
-                    rooms[1] = "there's a hatch 10 feet above you going into what looks like a bunker."
+                    rooms[1] ="# There's a hatch 10 feet above you going into what looks like a bunker."
                 else:
                     currentRoom = 201
             else:
-                oneLetterAtATime(" Looks like you need a key. Try looking around.")
+                oneLetterAtATime("Looks like you need a key. Try looking around.")
         if(croom == 110):
             if("grenade" in inventory):
                 oneLetterAtATime("The baricade looks weak enough to be blown apart by a grenade.")
-                i=input("use it now? (y/n) ")
+                i=input("Use it now? (y/n) ")
                 if(i=="y"):
                     srooms[3]=False
                     rooms[111]="Dirt walls border you to the East and South. The trench continues to the North and West. There a pile of wooden scraps on the ground to the West."
@@ -106,8 +110,8 @@ def sroom(srooms, croom, rooms, inventory):
         if(croom == 303):
             if("knife" in inventory):
                 oneLetterAtATime("This barbed wire looks like it could be cut apart with a knife.")
-                i=input("use it now (y/n)")
-                if(1=="y"):
+                i=input("Use it now (y/n)")
+                if(i=="y"):
                     srooms[1]=False
                     rooms[302]="Dirt walls border you to the east and west. Barbed wire litters the passage. The trench continues to the North and South"
                 else:
@@ -128,35 +132,37 @@ def move(direction, room):
 
     elif(direction=="n"):
         if(rooms[room - 1] == False):
-            oneLetterAtATime("Sadly, you cant walk through the ground, or walls.")
+            oneLetterAtATime("Sadly, you can't walk through the ground, or walls.")
         else:
             room -= 1
     elif(direction=="s"):
         if(rooms[room + 1] == False):
-            oneLetterAtATime("Sadly, you cant walk through the ground, or walls.")
+            oneLetterAtATime("Sadly, you can't walk through the ground, or walls.")
         else:
             room += 1
     elif(direction=="e"):
         if(rooms[room + 100] == False):
-            oneLetterAtATime("Sadly, you cant walk through the ground, or walls.")
+            oneLetterAtATime("Sadly, you can't walk through the ground, or walls.")
         else:
             room += 100
     elif(direction=="w"):
         if(rooms[room - 100] == False):
-            oneLetterAtATime("Sadly, you cant walk through the ground, or walls.")
+            oneLetterAtATime("Sadly, you can't walk through the ground, or walls.")
         else:
             room -= 100
     return room
 
-#
+def itemInRoom(room, items, desc):
+    if(items[room] != False):
+        print(desc[room])
 
 #oneLetterAtATime("You are an allied soldier fighting in world war 2 on the beaches. You got hit by an explosion and got push into a trench, luckly you survive becuase you landed on sand beg and now you have to fight your way out.  ")
 while True:
     #map.draw(rooms, False, currentRoom)
-    oneLetterAtATime(rooms[currentRoom])
+    print(rooms[currentRoom])
+    print("inventory: "+str(inventory)+"\n")
     checkForItem(currentRoom, items)
     sroom(specialRooms, currentRoom, rooms, inventory)
     itemInRoom(currentRoom, items, descriptions)
-    i=input("\nWhat do you want to do?")
+    i=input("n to go North, s for South, e for East, w for west.\nWhat do you want to do?")
     currentRoom=move(i, currentRoom)
-    print inventory
