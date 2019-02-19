@@ -9,6 +9,7 @@ items = []
 descriptions = []
 specialRooms = []
 currentRoom = 704
+end = False
 
 for i in range(999):
     rooms.append(False)
@@ -21,10 +22,10 @@ rooms[705] = "Dirt walls border you to the East and West. The trench continues t
 rooms[706] = "A dirt wall borders you to the East. The trench continues to the North, West, and South. There is a small pile of rocks to the West and something shiny farther south"
 rooms[707] = "Dirt walls border you to the East and West. The trench continues to the North and South. There is a pile of rubble to the south"
 rooms[708] = "Dirt walls border you to the East, West, and South. There is a large pile of rubble."
-items[708] = "grenade"
+items[708] = "Grenade"
 descriptions[708] = "You find a grenade among the rubble. Enter t to take."
 rooms[606] = "Dirt walls border you to the North and South. The trench continues to the East and West. There is a small pile of rocks."
-items[606] = "knife"
+items[606] = "Knife"
 descriptions[606] = "There is a knife among the rocks. Enter t to take"
 rooms[502] = "You've hit a dead end. The only way out is south."
 rooms[503] = "Dirt walls border you to the East and West. The trench continues to the North and South. You bump into a large wooden crate in the dark"
@@ -42,13 +43,13 @@ rooms[303] = "Dirt walls border you to the West and East. The trench continues t
 specialRooms[1] = 303
 rooms[304] = "Dirt walls border you to the West and East. The trench continues to the North and South"
 rooms[305] = "Dirt walls border you to the West and East. The trench continues to the North and South"
-rooms[306] = "A dirt wall borders you to the North. The trench continues to the East, West, and South"
+rooms[306] = "The trench continues to the East, West, North and South"
 rooms[307] = "Dirt walls border you to the East, West, and South. The trench continues to the North"
 rooms[201] = "Dirt walls border you to the North and South. The trench continues to the East and West"
 rooms[206] = "Dirt walls border you to the North and South. The trench continues to the East and West"
 rooms[101] = "There is a locked door on the west side."
 specialRooms[2] = 101
-rooms[106] = "Dirt walls border you to the North and south. The trench continues to the East and West. There a pile of wooden scraps on the ground to the West."
+rooms[106] = "A dirt wall borders you to the North. The trench continues to the East, West and South. There a pile of wooden scraps on the ground to the West."
 rooms[107] = "You are in an aisle. You can go south or lead north"
 rooms[108] = "The ground is littered with bits of metal. You can go south or lead north"
 items[108] = "Key"
@@ -58,7 +59,7 @@ rooms[110] = "You are in an aisle. The path south is blocked to the south with a
 specialRooms[3] = 110
 rooms[111] = False
 rooms[11] = "A dirt wall is south, north, and west. The only direction is east. Wooden boards litter the ground"
-items[11] = "ladder"
+items[11] = "Ladder"
 descriptions[11] = "You find a ladder laying among the boards. Enter t to take"
 rooms[6] = "Dirt walls border you to the West, North, and South. There are are some metal scraps at your feet."
 items[6] = "Ammo"
@@ -78,6 +79,7 @@ def sroom(srooms, croom, rooms, inventory):
                 oneLetterAtATime("The ladder should be able to get you up out of the trench")
                 i=input("Use the ladder? (y/n) ")
                 if(i=="y"):
+                    end = True
                     srooms[4]=False
                     oneLetterAtATime("As you make it to the surface, you pass out.")
                     oneLetterAtATime("You wake up in a wagon. Three other prisoners are with you. One of them speaks \"Hey, you. You're finally awake. You were trying to cross the border, right? Walked right into that Imperial ambush, same as us, and that thief over there.\"")
@@ -86,34 +88,41 @@ def sroom(srooms, croom, rooms, inventory):
             else:
                 oneLetterAtATime("Looks like you need a ladder. Look around.")
         if(croom == 101):
-            if("key" in inventory):
+            if("Key" in inventory):
                 oneLetterAtATime("Looks like the key you have would work.")
                 i=input("Would you like to use it? (y/n) ")
                 if(i=="y"):
+                    
+                    oneLetterAtATime("the key unlocks the door. \nYou can now continue west.")
                     srooms[1]=False
-                    rooms[1] ="# There's a hatch 10 feet above you going into what looks like a bunker."
+                    rooms[101]="You are in a doorway. the path continues West and East."
+                    rooms[1] ="There's a hatch 10 feet above you going into what looks like a bunker."
                 else:
                     currentRoom = 201
             else:
                 oneLetterAtATime("Looks like you need a key. Try looking around.")
         if(croom == 110):
-            if("grenade" in inventory):
+            if("Grenade" in inventory):
                 oneLetterAtATime("The baricade looks weak enough to be blown apart by a grenade.")
                 i=input("Use it now? (y/n) ")
                 if(i=="y"):
+                    oneLetterAtATime("You pull the pin and throw the grenade at the baricade. It gets torn apart by the explosion and you are showered with dirt. \nYou can now continue South.")
                     srooms[3]=False
+                    rooms[110]="Pieces of board litter the pathway. The path continues North and South."
                     rooms[111]="Dirt walls border you to the East and South. The trench continues to the North and West. There a pile of wooden scraps on the ground to the West."
                 else:
                     currentRoom = 109
             else:
                 oneLetterAtATime("The baricade is too solid to tear apart with your hands. Maybe if you had some sort of explosive you could blow it up?")
         if(croom == 303):
-            if("knife" in inventory):
+            if("Knife" in inventory):
                 oneLetterAtATime("This barbed wire looks like it could be cut apart with a knife.")
                 i=input("Use it now (y/n)")
                 if(i=="y"):
+                    oneLetterAtATime("You use the knife to cut through the wire. You get through, but in the process destroy the knife. \nYou can now continue north.")
                     srooms[1]=False
-                    rooms[302]="Dirt walls border you to the east and west. Barbed wire litters the passage. The trench continues to the North and South"
+                    rooms[303]="Dirt walls border you to the east and west. Barbed wire litters the passage. The trench continues to the North and South"
+                    rooms[302]="The path continues North and South."
                 else:
                     currentRoom = 304
         #open for more special rooms like ending, boss battle, etc.
@@ -156,13 +165,17 @@ def itemInRoom(room, items, desc):
     if(items[room] != False):
         print(desc[room])
 
-#oneLetterAtATime("You are an allied soldier fighting in world war 2 on the beaches. You got hit by an explosion and got push into a trench, luckly you survive becuase you landed on sand beg and now you have to fight your way out.  ")
-while True:
+#oneLetterAtATime("You are an allied soldier fighting in world war 2 on the beaches. You got hit by an explosion and got push into a trench, luckly you survive becuase you landed on sand bag and now you have to fight your way out.  ")
+while not end:
     #map.draw(rooms, False, currentRoom)
     print(rooms[currentRoom])
-    print("inventory: "+str(inventory)+"\n")
+    print("")
+    print("Inventory: "+str(inventory)+"\n")
     checkForItem(currentRoom, items)
     sroom(specialRooms, currentRoom, rooms, inventory)
+    if(end is True):
+        break
     itemInRoom(currentRoom, items, descriptions)
     i=input("n to go North, s for South, e for East, w for west.\nWhat do you want to do?")
+    print("")
     currentRoom=move(i, currentRoom)
