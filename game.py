@@ -70,7 +70,7 @@ specialRooms[4] = 1
 def oneLetterAtATime(text):
     for i in text:
         print(i, end="", flush=True)
-        sleep(0.05)
+        sleep(0.0)
 
 def sroom(srooms, croom, rooms, inventory):
     global end
@@ -175,10 +175,15 @@ while not end:
     oneLetterAtATime("\nInventory: "+str(inventory)+"\n")
     checkForItem(currentRoom, items)
     sroom(specialRooms, currentRoom, rooms, inventory)
-    if(end is True):
-        break
     itemInRoom(currentRoom, items, descriptions)
     oneLetterAtATime("n to go North, s for South, e for East, w for West.\n")
     i=input("What do you want to do? ")
     print("")
+    if(i=="crash"):
+        print("A Fatal Error Has Occured")
+        break
     currentRoom=move(i, currentRoom)
+    if(end is True):
+        break
+while True:
+    i=1
